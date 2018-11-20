@@ -25,22 +25,22 @@ var renderCloud = function (ctx, x, y, color) {
   for (var i = 0; i < (stepRender * 1.5); i++) {
     ctx.bezierCurveTo(x + renderWIDTH / 2 + renderWIDTH * i, y + hollowRender, x + renderWIDTH / 2 + renderWIDTH * i, y + hollowRender, x + renderWIDTH * (i + 1), y);
   }
-  //ctx.lineTo(x + CLOUD_WIDTH, y);
+  // ctx.lineTo(x + CLOUD_WIDTH, y);
 
   for (var i = 0; i < stepRender; i++) {
     ctx.bezierCurveTo(x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * i, x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * i, x + CLOUD_WIDTH, y + renderHEIGHT * (i + 1));
   }
-  //ctx.lineTo(x + CLOUD_WIDTH, y + CLOUD_HEIGHT);
+  // ctx.lineTo(x + CLOUD_WIDTH, y + CLOUD_HEIGHT);
 
   for (var i = 0; i < (stepRender * 1.5); i++) {
-    ctx.bezierCurveTo( x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH * (i + 1), y + CLOUD_HEIGHT);
+    ctx.bezierCurveTo(x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH * (i + 1), y + CLOUD_HEIGHT);
   }
-  //ctx.lineTo(x, y + CLOUD_HEIGHT);
+  // ctx.lineTo(x, y + CLOUD_HEIGHT);
 
   for (var i = 0; i < stepRender; i++) {
     ctx.bezierCurveTo(x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * i, x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * i, x, y + CLOUD_HEIGHT - renderHEIGHT * (i + 1));
   }
-  //ctx.lineTo(x, y);
+  // ctx.lineTo(x, y);
 
   ctx.closePath();
   ctx.strokeStyle = 'transparent';
@@ -51,7 +51,7 @@ var renderCloud = function (ctx, x, y, color) {
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
 
-  if ( arr.length == 0)
+  if (arr.length === 0)
     return 0;
 
   for (var i = 1; i < arr.length; i++) {
@@ -72,7 +72,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   var renderText = ['Ура вы победили!', 'Список результатов:'];
 
-  var afterTextX = CLOUD_X + GAP*4;
+  var afterTextX = CLOUD_X + GAP * 4;
   var afterTextY = CLOUD_Y + (GAP + FONT_SIZE) * (renderText.length + 1);
   var barRenderStep = BAR_SPACE + BAR_WIDTH;
 
@@ -93,7 +93,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = '#000000';
     ctx.fillText(Math.floor(times[i]), afterTextX + barRenderStep * i, afterTextY + BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
 
-    ctx.fillStyle = ( names[i] === "Вы") ? 'rgba(255, 0, 0, 1)' : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
     ctx.fillRect(afterTextX + barRenderStep * i, afterTextY + FONT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[i])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[i])) / maxTime - FONT_SIZE - GAP);
 
     ctx.fillStyle = '#000000';
