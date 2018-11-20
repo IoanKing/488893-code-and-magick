@@ -72,8 +72,8 @@ window.renderStatistics = function (ctx, names, times) {
 
   var renderText = ['Ура вы победили!', 'Список результатов:'];
 
-  var afterText_X = CLOUD_X + GAP*4;
-  var afterText_Y = CLOUD_Y + (GAP + FONT_SIZE) * (renderText.length + 1);
+  var afterTextX = CLOUD_X + GAP*4;
+  var afterTextY = CLOUD_Y + (GAP + FONT_SIZE) * (renderText.length + 1);
   var barRenderStep = BAR_SPACE + BAR_WIDTH;
 
   ctx.fillStyle = '#000000';
@@ -81,22 +81,22 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.textBaseline = 'hanging';
 
   for (var i = 0; i < renderText.length; i++) {
-    ctx.fillText(renderText[i], afterText_X, CLOUD_Y + FONT_SIZE + (GAP + FONT_SIZE) * i);
+    ctx.fillText(renderText[i], afterTextX, CLOUD_Y + FONT_SIZE + (GAP + FONT_SIZE) * i);
   }
 
   var maxTime = getMaxElement(times);
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-  // ctx.fillRect(afterText_X, afterText_Y, barRenderStep * names.length, BAR_HEIGHT);
+  // ctx.fillRect(afterTextX, afterTextY, barRenderStep * names.length, BAR_HEIGHT);
 
   for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = '#000000';
-    ctx.fillText(Math.floor(times[i]), afterText_X + barRenderStep * i, afterText_Y + BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
+    ctx.fillText(Math.floor(times[i]), afterTextX + barRenderStep * i, afterTextY + BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
 
     ctx.fillStyle = ( names[i] === "Вы") ? 'rgba(255, 0, 0, 1)' : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
-    ctx.fillRect(afterText_X + barRenderStep * i, afterText_Y + FONT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[i])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[i])) / maxTime - FONT_SIZE - GAP);
+    ctx.fillRect(afterTextX + barRenderStep * i, afterTextY + FONT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[i])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[i])) / maxTime - FONT_SIZE - GAP);
 
     ctx.fillStyle = '#000000';
-    ctx.fillText(names[i], afterText_X + barRenderStep * i, afterText_Y + BAR_HEIGHT + GAP);
+    ctx.fillText(names[i], afterTextX + barRenderStep * i, afterTextY + BAR_HEIGHT + GAP);
   }
 };
