@@ -22,23 +22,23 @@ var renderCloud = function (ctx, x, y, color) {
   var renderWIDTH = CLOUD_WIDTH / (stepRender * 1.5);
   var renderHEIGHT = CLOUD_HEIGHT / stepRender;
 
-  for (var i = 0; i < (stepRender * 1.5); i++) {
-    ctx.bezierCurveTo(x + renderWIDTH / 2 + renderWIDTH * i, y + hollowRender, x + renderWIDTH / 2 + renderWIDTH * i, y + hollowRender, x + renderWIDTH * (i + 1), y);
+  for (var index1 = 0; index1 < (stepRender * 1.5); index1++) {
+    ctx.bezierCurveTo(x + renderWIDTH / 2 + renderWIDTH * index1, y + hollowRender, x + renderWIDTH / 2 + renderWIDTH * index1, y + hollowRender, x + renderWIDTH * (index1 + 1), y);
   }
   // ctx.lineTo(x + CLOUD_WIDTH, y);
 
-  for (var i = 0; i < stepRender; i++) {
-    ctx.bezierCurveTo(x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * i, x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * i, x + CLOUD_WIDTH, y + renderHEIGHT * (i + 1));
+  for (var index2 = 0; index2 < stepRender; index2++) {
+    ctx.bezierCurveTo(x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * index2, x + CLOUD_WIDTH - hollowRender, y + renderHEIGHT / 2 + renderHEIGHT * index2, x + CLOUD_WIDTH, y + renderHEIGHT * (index2 + 1));
   }
   // ctx.lineTo(x + CLOUD_WIDTH, y + CLOUD_HEIGHT);
 
-  for (var i = 0; i < (stepRender * 1.5); i++) {
-    ctx.bezierCurveTo(x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * i, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH * (i + 1), y + CLOUD_HEIGHT);
+  for (var index3 = 0; index3 < (stepRender * 1.5); index3++) {
+    ctx.bezierCurveTo(x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * index3, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH / 2 - renderWIDTH * index3, y + CLOUD_HEIGHT - hollowRender, x + CLOUD_WIDTH - renderWIDTH * (index3 + 1), y + CLOUD_HEIGHT);
   }
   // ctx.lineTo(x, y + CLOUD_HEIGHT);
 
-  for (var i = 0; i < stepRender; i++) {
-    ctx.bezierCurveTo(x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * i, x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * i, x, y + CLOUD_HEIGHT - renderHEIGHT * (i + 1));
+  for (var index4 = 0; index4 < stepRender; index4++) {
+    ctx.bezierCurveTo(x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * index4, x + hollowRender, y + CLOUD_HEIGHT - renderHEIGHT / 2 - renderHEIGHT * index4, x, y + CLOUD_HEIGHT - renderHEIGHT * (index4 + 1));
   }
   // ctx.lineTo(x, y);
 
@@ -51,8 +51,9 @@ var renderCloud = function (ctx, x, y, color) {
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
 
-  if (arr.length === 0)
+  if (arr.length === 0) {
     return 0;
+  }
 
   for (var i = 1; i < arr.length; i++) {
     if (arr[i] > maxElement) {
@@ -89,14 +90,14 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
   // ctx.fillRect(afterTextX, afterTextY, barRenderStep * names.length, BAR_HEIGHT);
 
-  for (var i = 0; i < names.length; i++) {
+  for (var j = 0; j < names.length; j++) {
     ctx.fillStyle = '#000000';
-    ctx.fillText(Math.floor(times[i]), afterTextX + barRenderStep * i, afterTextY + BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
+    ctx.fillText(Math.floor(times[j]), afterTextX + barRenderStep * j, afterTextY + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[j])) / maxTime);
 
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
-    ctx.fillRect(afterTextX + barRenderStep * i, afterTextY + FONT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[i])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[i])) / maxTime - FONT_SIZE - GAP);
+    ctx.fillStyle = (names[j] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
+    ctx.fillRect(afterTextX + barRenderStep * j, afterTextY + FONT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[j])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[j])) / maxTime - FONT_SIZE - GAP);
 
     ctx.fillStyle = '#000000';
-    ctx.fillText(names[i], afterTextX + barRenderStep * i, afterTextY + BAR_HEIGHT + GAP);
+    ctx.fillText(names[j], afterTextX + barRenderStep * j, afterTextY + BAR_HEIGHT + GAP);
   }
 };
