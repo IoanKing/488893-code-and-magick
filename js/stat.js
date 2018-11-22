@@ -9,6 +9,8 @@ var CLOUD_BACKGROUND = 'rgba(0, 0, 0, 0.3)';
 var GAP = 10;
 var TEXT_SIZE = 16;
 var TEXT_FAMILY = '"PT Mono"';
+var TEXT_BASELINE = 'hanging';
+var TEXT_SIZE_UNITS = 'px';
 var BAR_SPACE = 50;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT = 150;
@@ -59,7 +61,7 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  if (arr.length === null) {
+  if (arr.length > 0) {
     return 0;
   }
 
@@ -87,8 +89,8 @@ window.renderStatistics = function (ctx, names, times) {
   var barRenderStep = BAR_SPACE + BAR_WIDTH;
 
   ctx.fillStyle = COLOR_WHITE;
-  ctx.font = TEXT_SIZE + 'px ' + TEXT_FAMILY;
-  ctx.textBaseline = 'hanging';
+  ctx.font = TEXT_SIZE + TEXT_SIZE_UNITS + ' ' + TEXT_FAMILY;
+  ctx.textBaseline = TEXT_BASELINE;
 
   for (var i = 0; i < WinText.length; i++) {
     ctx.fillText(WinText[i], afterTextX, CLOUD_Y + TEXT_SIZE + (GAP + TEXT_SIZE) * i);
