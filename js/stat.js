@@ -16,7 +16,7 @@ var BAR_WIDTH = 40;
 var BAR_HEIGHT = 150;
 
 var COLOR_WHITE = '#000000';
-var COLOR_PLAYER_BAR = '#FF0000';
+var COLOR_CURRENT_PLAYER_BAR = '#FF0000';
 var COLOR_BLACK = '#ffffff';
 var COLOR_CLOUD_BORDER_LINE = 'transparent';
 
@@ -61,7 +61,7 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  if (arr.length === 0) {
+  if (arr === 'undefined' && arr.length === 0) {
     return 0;
   }
 
@@ -102,7 +102,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = COLOR_WHITE;
     ctx.fillText(Math.floor(times[j]), afterTextX + barRenderStep * j, afterTextY + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[j])) / maxTime);
 
-    ctx.fillStyle = (names[j] === currentPlayerName) ? COLOR_PLAYER_BAR : 'hsla(235, 100%, ' + getRandom(10, 100) + '% , 1)';
+    ctx.fillStyle = (names[j] === currentPlayerName) ? COLOR_CURRENT_PLAYER_BAR : 'hsla(235, 100%, ' + getRandom(20, 100) + '% , 1)';
     ctx.fillRect(afterTextX + barRenderStep * j, afterTextY + TEXT_SIZE + GAP + BAR_HEIGHT - (BAR_HEIGHT * Math.floor(times[j])) / maxTime, BAR_WIDTH, (BAR_HEIGHT * Math.floor(times[j])) / maxTime - TEXT_SIZE - GAP);
 
     ctx.fillStyle = COLOR_WHITE;
