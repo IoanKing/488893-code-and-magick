@@ -61,8 +61,8 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  if (arr === 'undefined' && arr.length === 0) {
-    return 0;
+  if (arr.length === 0) {
+    return null;
   }
 
   var maxElement = arr[0];
