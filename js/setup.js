@@ -1,22 +1,27 @@
 'use strict';
 
+/* --------- CONSTANTS --------- */
+
 var COUNT_SETUP_SIMILAR_WIZARD = 4;
 
-var SETUP_SELECTOR = '.setup';
+var Selectors = {
+  SETUP_SELECTOR: '.setup',
+  SETUP_SIMILAR_SELECTOR: '.setup-similar',
+  SETUP_SIMILAR_LIST_SELECTOR: '.setup-similar-list',
+  SETUP_SIMILAR_ITEM_SELECTOR: '.setup-similar-item',
+  SETUP_SIMILAR_LABEL_SELECTOR: '.setup-similar-label',
 
-var SETUP_SIMILAR_SELECTOR = '.setup-similar';
-var SETUP_SIMILAR_LIST_SELECTOR = '.setup-similar-list';
-var SETUP_SIMILAR_ITEM_SELECTOR = '.setup-similar-item';
-var SETUP_SIMILAR_LABEL_SELECTOR = '.setup-similar-label';
+  SIMILAR_WIZARD_TEMPLATE_SELECTOR: '#similar-wizard-template',
 
-var SIMILAR_WIZARD_TEMPLATE_SELECTOR = '#similar-wizard-template';
-
-var WIZARD_COAT_SELECTOR = '.wizard-coat';
-var WIZARD_EYES_SELECTOR = '.wizard-eyes';
+  WIZARD_COAT_SELECTOR: '.wizard-coat',
+  WIZARD_EYES_SELECTOR: '.wizard-eyes',
+};
 
 var HIDDEN_CLASS = 'hidden';
 
-var names = [
+/* --------- ARRAYS --------- */
+
+var wizardNames = [
   'Иван',
   'Хуан Себастьян',
   'Мария',
@@ -27,7 +32,7 @@ var names = [
   'Вашингтон'
 ];
 
-var surNames = [
+var wizardSurnames = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -38,7 +43,7 @@ var surNames = [
   'Ирвинг'
 ];
 
-var coatColors = [
+var wizardCoatColors = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -47,7 +52,7 @@ var coatColors = [
   'rgb(0, 0, 0)'
 ];
 
-var eyesColors = [
+var wizardEyesColors = [
   'black',
   'red',
   'blue',
@@ -55,53 +60,57 @@ var eyesColors = [
   'green',
 ];
 
-var randomInt = function (count) {
-  return Math.floor(Math.random() * count);
+/* --------- FUNCTIONS --------- */
+
+var getRandomInt = function (max) {
+  return Math.floor(Math.random() * max);
 };
 
-var randomElementOfArr = function (arr) {
-  return randomInt(arr.length);
+var getRandomElement = function (collection) {
+  return collection[getRandomInt(collection.length)];
 };
 
-var createWizard = function (nameArr, surnameArr, coatColorArr, eyesColorArr) {
+var createWizard = function () {
   return {
-    name: nameArr[randomElementOfArr(nameArr)] + ' ' + surnameArr[randomElementOfArr(surnameArr)],
-    coatColor: coatColorArr[randomElementOfArr(coatColorArr)],
-    eyesColor: eyesColorArr[randomElementOfArr(eyesColorArr)],
+    name: getRandomElement(wizardNames) + ' ' + getRandomElement(wizardSurnames),
+    coatColor: getRandomElement(wizardCoatColors),
+    eyesColor: getRandomElement(wizardEyesColors),
   };
 };
 
-var fillWizardsCollection = function (nameArr, surnameArr, coatColorArr, eyesColorArr, count) {
-  var arr = [];
-  for (var i = 0; i < count; i++) {
-    arr.push(createWizard(nameArr, surnameArr, coatColorArr, eyesColorArr));
+var fillWizardsCollection = function () {
+  var wizardsCollections = [];
+  for (var i = 0; i < COUNT_SETUP_SIMILAR_WIZARD; i++) {
+    wizardsCollections.push(createWizard());
   }
-  return arr;
+  return wizardsCollections;
 };
-
-var wizards = fillWizardsCollection(names, surNames, coatColors, eyesColors, COUNT_SETUP_SIMILAR_WIZARD);
-
-var setupBlock = document.querySelector(SETUP_SELECTOR);
-setupBlock.classList.remove(HIDDEN_CLASS);
-
-var similarListElement = document.querySelector(SETUP_SIMILAR_LIST_SELECTOR);
-var similarWizardTemplate = document.querySelector(SIMILAR_WIZARD_TEMPLATE_SELECTOR)
-    .content
-    .querySelector(SETUP_SIMILAR_ITEM_SELECTOR);
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-  wizardElement.querySelector(SETUP_SIMILAR_LABEL_SELECTOR).textContent = wizard.name;
-  wizardElement.querySelector(WIZARD_COAT_SELECTOR).style.fill = wizard.coatColor;
-  wizardElement.querySelector(WIZARD_EYES_SELECTOR).style.fill = wizard.eyesColor;
+  wizardElement.querySelector(Selectors.SETUP_SIMILAR_LABEL_SELECTOR).textContent = wizard.name;
+  wizardElement.querySelector(Selectors.WIZARD_COAT_SELECTOR).style.fill = wizard.coatColor;
+  wizardElement.querySelector(Selectors.WIZARD_EYES_SELECTOR).style.fill = wizard.eyesColor;
   return wizardElement;
 };
 
+/* --------- CREATE WIZARDS --------- */
+
+var wizard = fillWizardsCollection();
+
+var setupBlock = document.querySelector(Selectors.SETUP_SELECTOR);
+setupBlock.classList.remove(HIDDEN_CLASS);
+
+var similarListElement = document.querySelector(Selectors.SETUP_SIMILAR_LIST_SELECTOR);
+var similarWizardTemplate = document.querySelector(Selectors.SIMILAR_WIZARD_TEMPLATE_SELECTOR)
+    .content
+    .querySelector(Selectors.SETUP_SIMILAR_ITEM_SELECTOR);
+
 var fragment = document.createDocumentFragment();
-for (var j = 0; j < wizards.length; j++) {
-  fragment.appendChild(renderWizard(wizards[j]));
+for (var j = 0; j < wizard.length; j++) {
+  fragment.appendChild(renderWizard(wizard[j]));
 }
 similarListElement.appendChild(fragment);
 
-setupBlock.querySelector(SETUP_SIMILAR_SELECTOR).classList.remove(HIDDEN_CLASS);
+setupBlock.querySelector(Selectors.SETUP_SIMILAR_SELECTOR).classList.remove(HIDDEN_CLASS);
 
