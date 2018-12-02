@@ -170,11 +170,11 @@ similarListElement.appendChild(fragment);
 
 var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT);
 var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
-var setupFireBall = document.querySelector(Selectors.SETUP_FIREBALL);
+var fireballElement = document.querySelector(Selectors.SETUP_FIREBALL);
 
 setupCoat.style.fill = wizardCoatColors[playerSetting.playerCoatColor - 1];
 setupEyes.style.fill = wizardEyesColors[playerSetting.playerEyesColor - 1];
-setupFireBall.style.background = fireBallColors[playerSetting.playerFireballColor - 1];
+fireballElement.style.background = fireBallColors[playerSetting.playerFireballColor - 1];
 
 setupCoat.addEventListener('click', function () {
   if ((playerSetting.playerCoatColor + 1) <= wizardCoatColors.length) {
@@ -198,14 +198,14 @@ setupEyes.addEventListener('click', function () {
   document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
 });
 
-setupFireBall.addEventListener('click', function () {
+fireballElement.addEventListener('click', function () {
   if ((playerSetting.playerFireballColor + 1) <= fireBallColors.length) {
     playerSetting.playerFireballColor++;
   } else {
     playerSetting.playerFireballColor = 1;
   }
   var fireballColor = fireBallColors[playerSetting.playerFireballColor - 1];
-  setupFireBall.style.background = fireballColor;
+  fireballElement.style.background = fireballColor;
   document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
 });
 
@@ -222,9 +222,7 @@ var setupOpen = document.querySelector(Selectors.SETUP_OPEN);
 var setupClose = document.querySelector(Selectors.SETUP_CLOSE);
 
 
-setupOpen.addEventListener('click', function () {
-  openPopup();
-});
+setupOpen.addEventListener('click', openPopup);
 
 setupOpen.addEventListener('keydown', function (evt) {
   if (evt.keyCode === Shortcuts.ENTER_KEYCODE) {
@@ -232,9 +230,7 @@ setupOpen.addEventListener('keydown', function (evt) {
   }
 });
 
-setupClose.addEventListener('click', function () {
-  closePopup();
-});
+setupClose.addEventListener('click', closePopup);
 
 setupClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === Shortcuts.ENTER_KEYCODE) {
