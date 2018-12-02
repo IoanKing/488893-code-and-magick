@@ -42,6 +42,12 @@ var Shortcuts = {
 
 var HIDDEN_CLASS = 'hidden';
 
+var playerSetting = {
+  playerCoatColor: 1,
+  playerEyesColor: 1,
+  playerFireballColor: 1,
+};
+
 /* --------- ARRAYS --------- */
 
 var wizardNames = [
@@ -166,22 +172,41 @@ var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT);
 var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
 var setupFireBall = document.querySelector(Selectors.SETUP_FIREBALL);
 
+setupCoat.style.fill = wizardCoatColors[playerSetting.playerCoatColor - 1];
+setupEyes.style.fill = wizardEyesColors[playerSetting.playerEyesColor - 1];
+setupFireBall.style.background = fireBallColors[playerSetting.playerFireballColor - 1];
+
 setupCoat.addEventListener('click', function () {
-  var randomCoatColor = getRandomElement(wizardCoatColors);
-  setupCoat.style.fill = randomCoatColor;
-  document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = randomCoatColor;
+  if ((playerSetting.playerCoatColor + 1) <= wizardCoatColors.length) {
+    playerSetting.playerCoatColor++;
+  } else {
+    playerSetting.playerCoatColor = 1;
+  }
+  var coatColor = wizardCoatColors[playerSetting.playerCoatColor - 1];
+  setupCoat.style.fill = coatColor;
+  document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
 });
 
 setupEyes.addEventListener('click', function () {
-  var randomEyesColor = getRandomElement(wizardEyesColors);
-  setupEyes.style.fill = randomEyesColor;
-  document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = randomEyesColor;
+  if ((playerSetting.playerEyesColor + 1) <= wizardEyesColors.length) {
+    playerSetting.playerEyesColor++;
+  } else {
+    playerSetting.playerEyesColor = 1;
+  }
+  var eyesColor = wizardEyesColors[playerSetting.playerEyesColor - 1];
+  setupEyes.style.fill = eyesColor;
+  document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
 });
 
 setupFireBall.addEventListener('click', function () {
-  var randomFireBallColor = getRandomElement(fireBallColors);
-  setupFireBall.style.background = randomFireBallColor;
-  document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = randomFireBallColor;
+  if ((playerSetting.playerFireballColor + 1) <= fireBallColors.length) {
+    playerSetting.playerFireballColor++;
+  } else {
+    playerSetting.playerFireballColor = 1;
+  }
+  var fireballColor = fireBallColors[playerSetting.playerFireballColor - 1];
+  setupFireBall.style.background = fireballColor;
+  document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
 });
 
 /* --------- ADD MINLENGTH TO USERNAME --------- */
