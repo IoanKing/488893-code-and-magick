@@ -3,6 +3,7 @@
 /* --------- CONSTANTS --------- */
 
 var COUNT_SETUP_SIMILAR_WIZARD = 4;
+var MIN_LENGTH = 2;
 
 var Selectors = {
   SETUP_SELECTOR: '.setup',
@@ -128,14 +129,6 @@ var onPopupEscPress = function (evt) {
   }
 };
 
-var onFocused = function () {
-  document.removeEventListener('keydown', onPopupEscPress);
-};
-
-var onBlur = function () {
-  document.addEventListener('keydown', onPopupEscPress);
-};
-
 var openPopup = function () {
   setup.classList.remove(HIDDEN_CLASS);
   document.addEventListener('keydown', onPopupEscPress);
@@ -185,15 +178,17 @@ setupFireBall.addEventListener('click', function () {
   document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = randomFireBallColor;
 });
 
+/* --------- ADD MINLENGTH TO USERNAME --------- */
+
+var userName = document.querySelector(Selectors.SETUP_USER_NAME_SELECTOR);
+userName.setAttribute('minlength', MIN_LENGTH);
+
 /* --------- OPEN MODAL --------- */
 
 var setup = document.querySelector(Selectors.SETUP_SELECTOR);
 var setupOpen = document.querySelector(Selectors.SETUP_OPEN_SELECTOR);
 var setupClose = document.querySelector(Selectors.SETUP_CLOSE_SELECTOR);
-var userName = document.querySelector(Selectors.SETUP_USER_NAME_SELECTOR);
 
-userName.addEventListener('focus', onFocused);
-userName.addEventListener('blur', onBlur);
 
 setupOpen.addEventListener('click', function () {
   openPopup();
