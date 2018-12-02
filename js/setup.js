@@ -4,6 +4,7 @@
 
 var COUNT_SETUP_SIMILAR_WIZARD = 4;
 var MIN_LENGTH = 2;
+var MAX_LENGTH = 25;
 
 var Selectors = {
   SETUP: '.setup',
@@ -20,6 +21,7 @@ var Selectors = {
   SETUP_WIZARD_COAT_SETTINGS: 'input[name="coat-color"]',
   SETUP_WIZARD_EYES_SETTINGS: 'input[name="eyes-color"]',
   SETUP_FIREBALL_SETTINGS: 'input[name="fireball-color"]',
+  SETUP_NAME_FOCUS: 'input[name="username"]:focus',
 
   SIMILAR_WIZARD_TEMPLATE: '#similar-wizard-template',
 
@@ -28,9 +30,9 @@ var Selectors = {
 };
 
 var ValidationMessages = {
-  VALIDATION_TOO_SHORT: 'Имя должно состоять минимум из 2-х символов',
-  VALIDATION_TOO_LONG: 'Имя не должно превышать 25-ти символов',
-  VALIDATION_REQUIRED: 'Обязательное поле',
+  TOO_SHORT: 'Имя должно состоять минимум из ' + MIN_LENGTH + ' символов',
+  TOO_LONG: 'Имя не должно превышать ' + MAX_LENGTH + ' символов',
+  REQUIRED: 'Обязательное поле',
 };
 
 var Shortcuts = {
@@ -123,8 +125,12 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+var onFocusInput = function () {
+  return document.querySelector(Selectors.SETUP_NAME_FOCUS);
+};
+
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === Shortcuts.ESC_KEYCODE) {
+  if (evt.keyCode === Shortcuts.ESC_KEYCODE && !onFocusInput()) {
     closePopup();
   }
 };
@@ -182,6 +188,7 @@ setupFireBall.addEventListener('click', function () {
 
 var userName = document.querySelector(Selectors.SETUP_USER_NAME);
 userName.setAttribute('minlength', MIN_LENGTH);
+userName.setAttribute('maxlength', MAX_LENGTH);
 
 /* --------- OPEN MODAL --------- */
 
@@ -216,11 +223,11 @@ var userNameInput = setup.querySelector(Selectors.SETUP_USER_NAME);
 
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
-    userNameInput.setCustomValidity(ValidationMessages.VALIDATION_TOO_SHORT);
+    userNameInput.setCustomValidity(ValidationMessages.TOO_SHORT);
   } else if (userNameInput.validity.tooLong) {
-    userNameInput.setCustomValidity(ValidationMessages.VALIDATION_TOO_LONG);
+    userNameInput.setCustomValidity(ValidationMessages.TOO_LONG);
   } else if (userNameInput.validity.valueMissing) {
-    userNameInput.setCustomValidity(ValidationMessages.VALIDATION_REQUIRED);
+    userNameInput.setCustomValidity(ValidationMessages.REQUIRED);
   } else {
     userNameInput.setCustomValidity('');
   }
@@ -228,8 +235,8 @@ userNameInput.addEventListener('invalid', function () {
 
 userNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
-  if (target.value.length < 2) {
-    target.setCustomValidity(ValidationMessages.VALIDATION_TOO_SHORT);
+  if (target.value.length < MIN_LENGTH) {
+    target.setCustomValidity(ValidationMessages.TOO_SHORT);
   } else {
     target.setCustomValidity('');
   }
