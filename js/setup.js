@@ -6,25 +6,25 @@ var COUNT_SETUP_SIMILAR_WIZARD = 4;
 var MIN_LENGTH = 2;
 
 var Selectors = {
-  SETUP_SELECTOR: '.setup',
-  SETUP_OPEN_SELECTOR: '.setup-open',
-  SETUP_CLOSE_SELECTOR: '.setup-close',
-  SETUP_SIMILAR_SELECTOR: '.setup-similar',
-  SETUP_SIMILAR_LIST_SELECTOR: '.setup-similar-list',
-  SETUP_SIMILAR_ITEM_SELECTOR: '.setup-similar-item',
-  SETUP_SIMILAR_LABEL_SELECTOR: '.setup-similar-label',
-  SETUP_USER_NAME_SELECTOR: '.setup-user-name',
-  SETUP_WIZARD_COAT_SELECTOR: '.setup-wizard .wizard-coat',
-  SETUP_WIZARD_EYES_SELECTOR: '.setup-wizard .wizard-eyes',
-  SETUP_FIREBALL_SELECTOR: '.setup-fireball-wrap',
+  SETUP: '.setup',
+  SETUP_OPEN: '.setup-open',
+  SETUP_CLOSE: '.setup-close',
+  SETUP_SIMILAR: '.setup-similar',
+  SETUP_SIMILAR_LIST: '.setup-similar-list',
+  SETUP_SIMILAR_ITEM: '.setup-similar-item',
+  SETUP_SIMILAR_LABEL: '.setup-similar-label',
+  SETUP_USER_NAME: '.setup-user-name',
+  SETUP_WIZARD_COAT: '.setup-wizard .wizard-coat',
+  SETUP_WIZARD_EYES: '.setup-wizard .wizard-eyes',
+  SETUP_FIREBALL: '.setup-fireball-wrap',
   SETUP_WIZARD_COAT_SETTINGS: 'input[name="coat-color"]',
   SETUP_WIZARD_EYES_SETTINGS: 'input[name="eyes-color"]',
   SETUP_FIREBALL_SETTINGS: 'input[name="fireball-color"]',
 
-  SIMILAR_WIZARD_TEMPLATE_SELECTOR: '#similar-wizard-template',
+  SIMILAR_WIZARD_TEMPLATE: '#similar-wizard-template',
 
-  WIZARD_COAT_SELECTOR: '.wizard-coat',
-  WIZARD_EYES_SELECTOR: '.wizard-eyes',
+  WIZARD_COAT: '.wizard-coat',
+  WIZARD_EYES: '.wizard-eyes',
 };
 
 var ValidationMessages = {
@@ -117,9 +117,9 @@ var fillWizardsCollection = function () {
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-  wizardElement.querySelector(Selectors.SETUP_SIMILAR_LABEL_SELECTOR).textContent = wizard.name;
-  wizardElement.querySelector(Selectors.WIZARD_COAT_SELECTOR).style.fill = wizard.coatColor;
-  wizardElement.querySelector(Selectors.WIZARD_EYES_SELECTOR).style.fill = wizard.eyesColor;
+  wizardElement.querySelector(Selectors.SETUP_SIMILAR_LABEL).textContent = wizard.name;
+  wizardElement.querySelector(Selectors.WIZARD_COAT).style.fill = wizard.coatColor;
+  wizardElement.querySelector(Selectors.WIZARD_EYES).style.fill = wizard.eyesColor;
   return wizardElement;
 };
 
@@ -143,10 +143,10 @@ var closePopup = function () {
 
 var wizard = fillWizardsCollection();
 
-var similarListElement = document.querySelector(Selectors.SETUP_SIMILAR_LIST_SELECTOR);
-var similarWizardTemplate = document.querySelector(Selectors.SIMILAR_WIZARD_TEMPLATE_SELECTOR)
+var similarListElement = document.querySelector(Selectors.SETUP_SIMILAR_LIST);
+var similarWizardTemplate = document.querySelector(Selectors.SIMILAR_WIZARD_TEMPLATE)
     .content
-    .querySelector(Selectors.SETUP_SIMILAR_ITEM_SELECTOR);
+    .querySelector(Selectors.SETUP_SIMILAR_ITEM);
 
 var fragment = document.createDocumentFragment();
 for (var j = 0; j < wizard.length; j++) {
@@ -156,9 +156,9 @@ similarListElement.appendChild(fragment);
 
 /* --------- SETUP WIZARDS --------- */
 
-var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT_SELECTOR);
-var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES_SELECTOR);
-var setupFireBall = document.querySelector(Selectors.SETUP_FIREBALL_SELECTOR);
+var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT);
+var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
+var setupFireBall = document.querySelector(Selectors.SETUP_FIREBALL);
 
 setupCoat.addEventListener('click', function () {
   var randomCoatColor = getRandomElement(wizardCoatColors);
@@ -180,14 +180,14 @@ setupFireBall.addEventListener('click', function () {
 
 /* --------- ADD MINLENGTH TO USERNAME --------- */
 
-var userName = document.querySelector(Selectors.SETUP_USER_NAME_SELECTOR);
+var userName = document.querySelector(Selectors.SETUP_USER_NAME);
 userName.setAttribute('minlength', MIN_LENGTH);
 
 /* --------- OPEN MODAL --------- */
 
-var setup = document.querySelector(Selectors.SETUP_SELECTOR);
-var setupOpen = document.querySelector(Selectors.SETUP_OPEN_SELECTOR);
-var setupClose = document.querySelector(Selectors.SETUP_CLOSE_SELECTOR);
+var setup = document.querySelector(Selectors.SETUP);
+var setupOpen = document.querySelector(Selectors.SETUP_OPEN);
+var setupClose = document.querySelector(Selectors.SETUP_CLOSE);
 
 
 setupOpen.addEventListener('click', function () {
@@ -212,7 +212,7 @@ setupClose.addEventListener('keydown', function (evt) {
 
 /* --------- VALIDATION --------- */
 
-var userNameInput = setup.querySelector(Selectors.SETUP_USER_NAME_SELECTOR);
+var userNameInput = setup.querySelector(Selectors.SETUP_USER_NAME);
 
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
