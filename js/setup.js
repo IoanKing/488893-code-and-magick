@@ -3,8 +3,8 @@
 /* --------- CONSTANTS --------- */
 
 var COUNT_SETUP_SIMILAR_WIZARD = 4;
-var MIN_LENGTH = 2;
-var MAX_LENGTH = 25;
+var MIN_TEXT_LENGTH = 2;
+var MAX_TEXT_LENGTH = 25;
 
 var Selectors = {
   SETUP: '.setup',
@@ -30,8 +30,8 @@ var Selectors = {
 };
 
 var ValidationMessages = {
-  TOO_SHORT: 'Имя должно состоять минимум из ' + MIN_LENGTH + ' символов',
-  TOO_LONG: 'Имя не должно превышать ' + MAX_LENGTH + ' символов',
+  TOO_SHORT: 'Имя должно состоять минимум из ' + MIN_TEXT_LENGTH + ' символов',
+  TOO_LONG: 'Имя не должно превышать ' + MAX_TEXT_LENGTH + ' символов',
   REQUIRED: 'Обязательное поле',
 };
 
@@ -43,9 +43,9 @@ var Shortcuts = {
 var HIDDEN_CLASS = 'hidden';
 
 var playerSetting = {
-  playerCoatColor: 1,
-  playerEyesColor: 1,
-  playerFireballColor: 1,
+  playerCoatColor: 0,
+  playerEyesColor: 0,
+  playerFireballColor: 0,
 };
 
 /* --------- ARRAYS --------- */
@@ -172,39 +172,27 @@ var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT);
 var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
 var fireballElement = document.querySelector(Selectors.SETUP_FIREBALL);
 
-setupCoat.style.fill = wizardCoatColors[playerSetting.playerCoatColor - 1];
-setupEyes.style.fill = wizardEyesColors[playerSetting.playerEyesColor - 1];
-fireballElement.style.background = fireBallColors[playerSetting.playerFireballColor - 1];
+setupCoat.style.fill = wizardCoatColors[playerSetting.playerCoatColor];
+setupEyes.style.fill = wizardEyesColors[playerSetting.playerEyesColor];
+fireballElement.style.background = fireBallColors[playerSetting.playerFireballColor];
 
 setupCoat.addEventListener('click', function () {
-  if ((playerSetting.playerCoatColor + 1) <= wizardCoatColors.length) {
-    playerSetting.playerCoatColor++;
-  } else {
-    playerSetting.playerCoatColor = 1;
-  }
-  var coatColor = wizardCoatColors[playerSetting.playerCoatColor - 1];
+  playerSetting.playerCoatColor = (playerSetting.playerCoatColor + 1) % wizardCoatColors.length;
+  var coatColor = wizardCoatColors[playerSetting.playerCoatColor];
   setupCoat.style.fill = coatColor;
   document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
 });
 
 setupEyes.addEventListener('click', function () {
-  if ((playerSetting.playerEyesColor + 1) <= wizardEyesColors.length) {
-    playerSetting.playerEyesColor++;
-  } else {
-    playerSetting.playerEyesColor = 1;
-  }
-  var eyesColor = wizardEyesColors[playerSetting.playerEyesColor - 1];
+  playerSetting.playerEyesColor = (playerSetting.playerEyesColor + 1) % wizardEyesColors.length;
+  var eyesColor = wizardEyesColors[playerSetting.playerEyesColor];
   setupEyes.style.fill = eyesColor;
   document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
 });
 
 fireballElement.addEventListener('click', function () {
-  if ((playerSetting.playerFireballColor + 1) <= fireBallColors.length) {
-    playerSetting.playerFireballColor++;
-  } else {
-    playerSetting.playerFireballColor = 1;
-  }
-  var fireballColor = fireBallColors[playerSetting.playerFireballColor - 1];
+  playerSetting.playerFireballColor = (playerSetting.playerFireballColor + 1) % fireBallColors.length;
+  var fireballColor = fireBallColors[playerSetting.playerFireballColor];
   fireballElement.style.background = fireballColor;
   document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
 });
@@ -212,15 +200,14 @@ fireballElement.addEventListener('click', function () {
 /* --------- ADD MINLENGTH TO USERNAME --------- */
 
 var userName = document.querySelector(Selectors.SETUP_USER_NAME);
-userName.setAttribute('minlength', MIN_LENGTH);
-userName.setAttribute('maxlength', MAX_LENGTH);
+userName.setAttribute('minlength', MIN_TEXT_LENGTH);
+userName.setAttribute('maxlength', MAX_TEXT_LENGTH);
 
 /* --------- OPEN MODAL --------- */
 
 var setup = document.querySelector(Selectors.SETUP);
 var setupOpen = document.querySelector(Selectors.SETUP_OPEN);
 var setupClose = document.querySelector(Selectors.SETUP_CLOSE);
-
 
 setupOpen.addEventListener('click', openPopup);
 
@@ -244,19 +231,20 @@ var userNameInput = setup.querySelector(Selectors.SETUP_USER_NAME);
 
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
-    userNameInput.setCustomValidity(ValidationMessages.TOO_SHORT);
-  } else if (userNameInput.validity.tooLong) {
-    userNameInput.setCustomValidity(ValidationMessages.TOO_LONG);
-  } else if (userNameInput.validity.valueMissing) {
-    userNameInput.setCustomValidity(ValidationMessages.REQUIRED);
-  } else {
-    userNameInput.setCustomValidity('');
+    return userNameInput.setCustomValidity(ValidationMessages.TOO_SHORT);
   }
+  if (userNameInput.validity.tooLong) {
+    return userNameInput.setCustomValidity(ValidationMessages.TOO_LONG);
+  }
+  if (userNameInput.validity.valueMissing) {
+    return userNameInput.setCustomValidity(ValidationMessages.REQUIRED);
+  }
+  return userNameInput.setCustomValidity('');
 });
 
 userNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
-  if (target.value.length < MIN_LENGTH) {
+  if (target.value.length < MIN_TEXT_LENGTH) {
     target.setCustomValidity(ValidationMessages.TOO_SHORT);
   } else {
     target.setCustomValidity('');
