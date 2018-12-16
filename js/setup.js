@@ -166,6 +166,9 @@ for (var j = 0; j < wizard.length; j++) {
 }
 similarListElement.appendChild(fragment);
 
+var setupSimular = document.querySelector(Selectors.SETUP_SIMILAR);
+setupSimular.classList.remove(HIDDEN_CLASS);
+
 /* --------- SETUP WIZARDS --------- */
 
 var setupCoat = document.querySelector(Selectors.SETUP_WIZARD_COAT);
