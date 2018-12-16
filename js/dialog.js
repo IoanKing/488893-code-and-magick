@@ -61,7 +61,7 @@ dialogHandler.addEventListener('mousedown', function (evt) {
       y: startCoords.y - moveEvt.clientY
     };
 
-    dragged = (!dragged) ? (Math.abs(shift.x) >= DRAGGED_STEP || Math.abs(shift.x) <= DRAGGED_STEP * -1 || Math.abs(shift.y) >= DRAGGED_STEP || Math.abs(shift.y) <= DRAGGED_STEP * -1) : dragged;
+    dragged = dragged || (Math.abs(shift.x) >= DRAGGED_STEP || Math.abs(shift.y) >= DRAGGED_STEP);
 
     startCoords = {
       x: moveEvt.clientX,
