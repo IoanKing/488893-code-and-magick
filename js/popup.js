@@ -55,4 +55,9 @@
       closePopup();
     }
   });
+
+  window.popup = {
+    close: closePopup,
+  };
+
 })();
