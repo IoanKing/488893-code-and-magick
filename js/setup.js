@@ -7,6 +7,7 @@
   var MAX_TEXT_LENGTH = 25;
 
   var Selectors = {
+    SETUP_WIZARD: '.setup-wizard-form',
     SETUP_USER_NAME: '.setup-user-name',
     SETUP_FIREBALL: '.setup-fireball-wrap',
     SETUP_WIZARD_COAT: '.setup-wizard .wizard-coat',
@@ -43,9 +44,9 @@
   ];
 
   var playerSetting = {
-    playerCoatColor: 0,
-    playerEyesColor: 0,
-    playerFireballColor: 0,
+    coatColor: 0,
+    eyesColor: 0,
+    fireballColor: 0,
   };
 
   /* --------- SETUP WIZARD --------- */
@@ -54,27 +55,27 @@
   var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
   var fireballElement = document.querySelector(Selectors.SETUP_FIREBALL);
 
-  setupCoat.style.fill = wizardCoatColors[playerSetting.playerCoatColor];
-  setupEyes.style.fill = wizardEyesColors[playerSetting.playerEyesColor];
-  fireballElement.style.background = fireBallColors[playerSetting.playerFireballColor];
+  setupCoat.style.fill = wizardCoatColors[playerSetting.coatColor];
+  setupEyes.style.fill = wizardEyesColors[playerSetting.eyesColor];
+  fireballElement.style.background = fireBallColors[playerSetting.fireballColor];
 
   setupCoat.addEventListener('click', function () {
-    playerSetting.playerCoatColor = (playerSetting.playerCoatColor + 1) % wizardCoatColors.length;
-    var coatColor = wizardCoatColors[playerSetting.playerCoatColor];
+    playerSetting.coatColor = (playerSetting.coatColor + 1) % wizardCoatColors.length;
+    var coatColor = wizardCoatColors[playerSetting.coatColor];
     setupCoat.style.fill = coatColor;
     document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
   });
 
   setupEyes.addEventListener('click', function () {
-    playerSetting.playerEyesColor = (playerSetting.playerEyesColor + 1) % wizardEyesColors.length;
-    var eyesColor = wizardEyesColors[playerSetting.playerEyesColor];
+    playerSetting.eyesColor = (playerSetting.eyesColor + 1) % wizardEyesColors.length;
+    var eyesColor = wizardEyesColors[playerSetting.eyesColor];
     setupEyes.style.fill = eyesColor;
     document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
   });
 
   fireballElement.addEventListener('click', function () {
-    playerSetting.playerFireballColor = (playerSetting.playerFireballColor + 1) % fireBallColors.length;
-    var fireballColor = fireBallColors[playerSetting.playerFireballColor];
+    playerSetting.fireballColor = (playerSetting.fireballColor + 1) % fireBallColors.length;
+    var fireballColor = fireBallColors[playerSetting.fireballColor];
     fireballElement.style.background = fireballColor;
     document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
   });
@@ -84,4 +85,15 @@
   var userName = document.querySelector(Selectors.SETUP_USER_NAME);
   userName.setAttribute('minlength', MIN_TEXT_LENGTH);
   userName.setAttribute('maxlength', MAX_TEXT_LENGTH);
+
+  /* --------- SEND WIZARD SETTINGS To SERVER --------- */
+
+  var setupWizard = document.querySelector(Selectors.SETUP_WIZARD);
+
+  setupWizard.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    window.backend.action(window.popup.close, window.backend.error, new FormData(setupWizard));
+  });
+
 })();
