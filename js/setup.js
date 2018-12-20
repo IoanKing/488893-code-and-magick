@@ -93,7 +93,7 @@
   setupWizard.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.backend.save(new FormData(setupWizard), window.popup.close, window.backend.error);
+    window.backend.action(window.popup.close, window.backend.error, new FormData(setupWizard));
   });
 
 })();

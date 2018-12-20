@@ -4,6 +4,8 @@
   var URL_LOAD = 'https://js.dump.academy/code-and-magick/data';
   var URL_SEND = 'https://js.dump.academy/code-and-magick';
 
+  var TIMEOUT_REQUEST = 10000;
+
   var ErrorElement = {
     BLOCK: 'div',
     STYLE: 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;',
@@ -13,31 +15,14 @@
     FONT_SIZE: '30px',
   };
 
-  var backendLoad = function (onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
-
-    xhr.timeout = 10000; // 10s
-
-    xhr.open('GET', URL_LOAD);
-    xhr.send();
+  var ErrorMessage = {
+    ANSWER_STATUS: 'Статус ответа: ',
+    CONNECTION: 'Произошла ошибка соединения',
+    TIMEOUT_BEGIN: 'Запрос не успел выполниться за ',
+    TIMEOUT_END: 'мс'
   };
 
-  var backendSave = function (data, onLoad, onError) {
+  var backendAction = function (onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -45,19 +30,24 @@
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError(ErrorMessage.ANSWER_STATUS + xhr.status + ' ' + xhr.statusText);
       }
     });
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError(ErrorMessage.CONNECTION);
     });
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError(ErrorMessage.TIMEOUT_BEGIN + xhr.timeout + ErrorMessage.TIMEOUT_END);
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = TIMEOUT_REQUEST;
 
-    xhr.open('POST', URL_SEND);
+    if (typeof data === 'object') {
+      xhr.open('POST', URL_SEND);
+    } else {
+      xhr.open('GET', URL_LOAD);
+    }
+
     xhr.send(data);
   };
 
@@ -74,8 +64,7 @@
   };
 
   window.backend = {
-    load: backendLoad,
-    save: backendSave,
+    action: backendAction,
     error: errorHandler
   };
 })();

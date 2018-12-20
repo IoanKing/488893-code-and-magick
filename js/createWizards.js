@@ -51,5 +51,5 @@
     setupSimular.classList.remove(HIDDEN_CLASS);
   };
 
-  window.backend.load(successHandler, window.backend.error);
+  window.backend.action(successHandler, window.backend.error);
 })();
