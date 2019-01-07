@@ -19,6 +19,11 @@
     WIZARD_EYES: '.wizard-eyes',
   };
 
+  var Rank = {
+    COAT_RANK: 2,
+    EYES_RANK: 1
+  };
+
   var coatColor = window.playerSetting.coatColor;
   var eyesColor = window.playerSetting.eyesColor;
   window.wizards = [];
@@ -49,10 +54,10 @@
     var rank = 0;
 
     if (data.colorCoat === coatColor) {
-      rank += 2;
+      rank += Rank.COAT_RANK;
     }
     if (data.colorEyes === eyesColor) {
-      rank += 1;
+      rank += Rank.EYES_RANK;
     }
 
     return rank;
