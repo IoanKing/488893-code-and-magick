@@ -62,11 +62,7 @@
 
     render(window.wizards.slice().
     sort(function (left, right) {
-      var rankDiff = getRank(right) - getRank(left);
-      if (rankDiff === 0) {
-        rankDiff = window.wizards.indexOf(left) - window.wizards.indexOf(right);
-      }
-      return rankDiff;
+      return (getRank(right) - getRank(left)) ? getRank(right) - getRank(left) : window.wizards.indexOf(left) - window.wizards.indexOf(right);
     }));
   };
 
