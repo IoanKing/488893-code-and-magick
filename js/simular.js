@@ -65,24 +65,24 @@
     });
   };
 
-  var updateWizard = function () {
+  var updateWizards = function () {
     render(sortByRank(window.wizards));
   };
 
   var onEyesChange = window.debounce(function (color) {
     eyesColor = color;
-    updateWizard();
+    updateWizards();
   });
 
   var onCoatChange = window.debounce(function (color) {
     coatColor = color;
-    updateWizard();
+    updateWizards();
   });
 
   var successHandler = function (data) {
     window.wizards = data;
 
-    updateWizard();
+    updateWizards();
 
     var setupSimular = userDialog.querySelector(Selector.SETUP_SIMILAR);
     setupSimular.classList.remove(HIDDEN_CLASS);
@@ -91,7 +91,7 @@
   window.backend.action(successHandler, window.backend.error);
 
   window.simular = {
-    update: updateWizard,
+    update: updateWizards,
     onEyesChange: onEyesChange,
     onCoatChange: onCoatChange,
   };
