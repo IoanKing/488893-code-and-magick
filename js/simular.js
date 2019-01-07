@@ -58,12 +58,15 @@
     return rank;
   };
 
-  var updateWizard = function () {
-
-    render(window.wizards.slice().
+  var sortByRank = function (collection) {
+    return collection.slice().
     sort(function (left, right) {
       return (getRank(right) - getRank(left)) ? getRank(right) - getRank(left) : window.wizards.indexOf(left) - window.wizards.indexOf(right);
-    }));
+    });
+  };
+
+  var updateWizard = function () {
+    render(sortByRank(window.wizards));
   };
 
   var onEyesChange = window.debounce(function (color) {
