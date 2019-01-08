@@ -95,7 +95,7 @@
 
   window.backend.action(successHandler, window.backend.error);
 
-  window.simular = {
+  window.createWizards = {
     update: updateWizards,
     onEyesChange: onEyesChange,
     onCoatChange: onCoatChange,

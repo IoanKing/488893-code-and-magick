@@ -80,14 +80,14 @@
         var coatColor = wizardCoatColors[window.playerSetting.coatColor];
         element.style.fill = coatColor;
         document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
-        window.simular.onCoatChange(coatColor);
+        window.createWizards.onCoatChange(coatColor);
         break;
       case Customization.EYES:
         window.playerSetting.eyesColor = (window.playerSetting.eyesColor + 1) % wizardEyesColors.length;
         var eyesColor = wizardEyesColors[window.playerSetting.eyesColor];
         element.style.fill = eyesColor;
         document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
-        window.simular.onEyesChange(eyesColor);
+        window.createWizards.onEyesChange(eyesColor);
         break;
     }
   };
