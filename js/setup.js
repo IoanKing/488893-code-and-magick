@@ -43,7 +43,13 @@
     '#e6e848',
   ];
 
-  var playerSetting = {
+  var Customization = {
+    COAT: 'wizard-coat',
+    EYES: 'wizard-eyes',
+    FIREBALL: 'setup-fireball'
+  };
+
+  window.window.playerSetting = {
     coatColor: 0,
     eyesColor: 0,
     fireballColor: 0,
@@ -55,30 +61,40 @@
   var setupEyes = document.querySelector(Selectors.SETUP_WIZARD_EYES);
   var fireballElement = document.querySelector(Selectors.SETUP_FIREBALL);
 
-  setupCoat.style.fill = wizardCoatColors[playerSetting.coatColor];
-  setupEyes.style.fill = wizardEyesColors[playerSetting.eyesColor];
-  fireballElement.style.background = fireBallColors[playerSetting.fireballColor];
+  setupCoat.style.fill = wizardCoatColors[window.playerSetting.coatColor];
+  setupEyes.style.fill = wizardEyesColors[window.playerSetting.eyesColor];
+  fireballElement.style.background = fireBallColors[window.playerSetting.fireballColor];
 
-  setupCoat.addEventListener('click', function () {
-    playerSetting.coatColor = (playerSetting.coatColor + 1) % wizardCoatColors.length;
-    var coatColor = wizardCoatColors[playerSetting.coatColor];
-    setupCoat.style.fill = coatColor;
-    document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
-  });
+  var changeColor = function (evt) {
+    var element = evt.target;
+    var elementCustomization = element.getAttribute('class');
+    switch (elementCustomization) {
+      case Customization.FIREBALL:
+        window.playerSetting.fireballColor = (window.playerSetting.fireballColor + 1) % fireBallColors.length;
+        var fireballColor = fireBallColors[window.playerSetting.fireballColor];
+        element.parentNode.style.background = fireballColor;
+        document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
+        break;
+      case Customization.COAT:
+        window.playerSetting.coatColor = (window.playerSetting.coatColor + 1) % wizardCoatColors.length;
+        var coatColor = wizardCoatColors[window.playerSetting.coatColor];
+        element.style.fill = coatColor;
+        document.querySelector(Selectors.SETUP_WIZARD_COAT_SETTINGS).value = coatColor;
+        window.simular.onCoatChange(coatColor);
+        break;
+      case Customization.EYES:
+        window.playerSetting.eyesColor = (window.playerSetting.eyesColor + 1) % wizardEyesColors.length;
+        var eyesColor = wizardEyesColors[window.playerSetting.eyesColor];
+        element.style.fill = eyesColor;
+        document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
+        window.simular.onEyesChange(eyesColor);
+        break;
+    }
+  };
 
-  setupEyes.addEventListener('click', function () {
-    playerSetting.eyesColor = (playerSetting.eyesColor + 1) % wizardEyesColors.length;
-    var eyesColor = wizardEyesColors[playerSetting.eyesColor];
-    setupEyes.style.fill = eyesColor;
-    document.querySelector(Selectors.SETUP_WIZARD_EYES_SETTINGS).value = eyesColor;
-  });
-
-  fireballElement.addEventListener('click', function () {
-    playerSetting.fireballColor = (playerSetting.fireballColor + 1) % fireBallColors.length;
-    var fireballColor = fireBallColors[playerSetting.fireballColor];
-    fireballElement.style.background = fireballColor;
-    document.querySelector(Selectors.SETUP_FIREBALL_SETTINGS).value = fireballColor;
-  });
+  setupCoat.addEventListener('click', changeColor);
+  setupEyes.addEventListener('click', changeColor);
+  fireballElement.addEventListener('click', changeColor);
 
   /* --------- ADD MINLENGTH TO USERNAME --------- */
 
